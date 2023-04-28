@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  docker-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sys
+      #      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3307:3306
+
+  studentsignupproject:
+    image: spring-boot-docker:latest
+    container_name: spring-boot-docker
+    ports:
+      - 8085:8084
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/sys?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql
